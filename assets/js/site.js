@@ -314,7 +314,7 @@
     var payment_form, submit_payment, pay_name, pay_ccn, pay_expr_mo, pay_expr_yr, pay_cvv, pay_zipcode, pay_email, movie_title, adult_tix, child_tix, senior_tix, subtotal, tax, i;
 
     // Shared Variables
-    var edit_time;
+    var edit_time, edit_ticket;
 
     // Check which page we're on and load that content
     if (document.getElementById('main-select-movie') !== null) {
@@ -758,8 +758,16 @@
         seat_form.addEventListener('input', function(){
           storePrefixedInputStorageItem(seat_form.name, event.target);
         });
-        
-        // Add Back button for editting ticket time
+
+        // Add Back button for editing tickets
+        edit_ticket = document.createElement('a');
+        edit_ticket.textContent = 'Edit Tickets';
+        edit_ticket.setAttribute('id', 'edit-ticket');
+        edit_ticket.setAttribute('href', '../tickets');
+
+        document.querySelector("#screen").before(edit_ticket);
+
+        // Add Back button for editing ticket time
         edit_time = document.createElement('a');
         edit_time.textContent = 'Edit Time';
         edit_time.setAttribute('id', 'edit-time');
