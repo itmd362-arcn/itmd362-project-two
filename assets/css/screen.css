@@ -254,7 +254,7 @@ label[for="sr-tickets"] {
 }
 
 /* ===== Module Rules ===== */
-.seat-page-header p {
+#screen {
   border-radius: 0.3125em;
   background: gray;
   color: #ffffff;
