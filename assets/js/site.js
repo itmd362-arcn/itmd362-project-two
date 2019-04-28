@@ -299,16 +299,12 @@
     }
   }
 
-  // Show selected movie
-  function show_selected_movie(placement, ref_element) {
-    var movie = document.createElement('p');
-    movie.textContent = 'Movie: ' + localStorage.getItem('movie-title');
-    movie.setAttribute('id', 'movie');
-
-    if (placement === 'after') {
-      document.querySelector(ref_element).after(movie);
-    } else { // placement === 'before'
-      document.querySelector(ref_element).before(movie);
+  // Show aspects of movie ticket progress
+  function show_ticket_progress(ref_element, item) {
+    var i;
+    var elem = document.querySelector(ref_element);
+    for (i of item) {
+      elem.textContent += localStorage.getItem(i) + ' ';
     }
   }
 
@@ -663,7 +659,7 @@
           document.location.assign('../');
         }
 
-        show_selected_movie('after', '#content-header');
+        show_ticket_progress('#movie', ['movie-title']);
 
         // Check for the submit button on the time/date page
         if (submit_showTime !== null) {
@@ -698,18 +694,16 @@
           seniorTick.value = localStorage.getItem('tickets_seniorTickets');
         }
 
-        document.querySelector('#movie-date-selected').innerText = 'Time: ' +
-        localStorage.getItem('time_movieTime') + ', ' + localStorage.getItem('time_movieDate');
-
         // Add Back button for editing ticket time
         edit_time = document.createElement('a');
         edit_time.textContent = 'Edit Time';
         edit_time.setAttribute('id', 'edit-time');
         edit_time.setAttribute('href', '../time');
 
-        document.querySelector("#movie-date-selected").after(edit_time);
+        document.querySelector("#time").after(edit_time);
 
-        show_selected_movie('after', '#content-header');
+        show_ticket_progress('#movie', ['movie-title']);
+        show_ticket_progress('#time', ['time_movieTime', 'time_movieDate']);
 
         // Check for the submit button/input on the ticket page
         if (ticketType !== null) {
@@ -788,21 +782,11 @@
           storePrefixedInputStorageItem(seat_form.name, event.target);
         });
 
-        show_selected_movie('before', '#screen');
-
-        // Show selected movie time
-        show_date_time = document.createElement('p');
-        show_date_time.textContent = 'Time: ' + localStorage.getItem('time_movieTime') + ', ' + localStorage.getItem('time_movieDate');
-        show_date_time.setAttribute('id', 'movie-date-selected');
-
-        document.querySelector('#screen').before(show_date_time);
+        show_ticket_progress('#movie', ['movie-title']);
+        show_ticket_progress('#time', ['time_movieTime', 'time_movieDate']);
 
         // Show selected tickets
-        show_tickets = document.createElement('p');
-        show_tickets.textContent = 'Tickets: ' + calc_tickets(adult_tkt, child_tkt, senior_tkt);
-        show_tickets.setAttribute('id', 'movie-tickets-selected');
-
-        document.querySelector('#screen').before(show_tickets);
+        document.querySelector('#tickets').textContent += calc_tickets(adult_tkt, child_tkt, senior_tkt);
 
         // Add Back button for editing tickets
         edit_ticket = document.createElement('a');
@@ -810,7 +794,7 @@
         edit_ticket.setAttribute('id', 'edit-ticket');
         edit_ticket.setAttribute('href', '../tickets');
 
-        document.querySelector("#screen").before(edit_ticket);
+        document.querySelector("#tickets").after(edit_ticket);
 
         // Add Back button for editing ticket time
         edit_time = document.createElement('a');
@@ -818,7 +802,7 @@
         edit_time.setAttribute('id', 'edit-time');
         edit_time.setAttribute('href', '../time');
 
-        document.querySelector("#screen").before(edit_time);
+        document.querySelector("#time").after(edit_time);
       }
 
       // Listen for the form's submit event, intercept it and
