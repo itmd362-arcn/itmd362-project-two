@@ -637,14 +637,8 @@
       }
     }
 
-    if (document.getElementById('time-page') !== null || document.getElementById('tickets-page')) {
+    if (document.getElementById('time-page') !== null) {
       submit_showTime = document.getElementById('show-time');
-
-      // Variables on ticket page
-      adultTick = document.querySelector('#adult-tickets');
-      childTick = document.querySelector('#ch-tickets');
-      seniorTick = document.querySelector('#sr-tickets');
-      ticketType = document.querySelector('#ticket-type');
 
       if (storageAvailable('localStorage')) {
         // If LocalStorage does not have selected movie, redirect to Homepage
@@ -661,6 +655,23 @@
             storeDateAndTime(e);
           });
         }
+      } // end if (storageAvailable....
+    } // === END TIME FUNCTIONALITY
+
+    if (document.getElementById('tickets-page') !== null) {
+      // Variables on ticket page
+      adultTick = document.querySelector('#adult-tickets');
+      childTick = document.querySelector('#ch-tickets');
+      seniorTick = document.querySelector('#sr-tickets');
+      ticketType = document.querySelector('#ticket-type');
+
+      if (storageAvailable('localStorage')) {
+        // If LocalStorage does not have selected movie, redirect to Homepage
+        // Prevents user from skipping steps
+        if (localStorage.getItem('movie-title') === null) {
+          document.location.assign('../');
+        }
+
         // Check for the submit button/input on the ticket page
         if (ticketType !== null) {
           ticketSum = 0;
@@ -691,7 +702,7 @@
           });
         } // ticketType== null
       } // end if (storageAvailable....
-    } // === END TIME AND TICKETS FUNCTIONALITY
+    } // === END TIME FUNCTIONALITY
 
     if (document.getElementById('seat-content') !== null) {
       // Select the necessary elements from the DOM
