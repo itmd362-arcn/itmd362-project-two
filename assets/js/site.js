@@ -305,10 +305,11 @@
     movie.textContent = 'Movie: ' + localStorage.getItem('movie-title');
     movie.setAttribute('id', 'movie');
 
-    if (placement === 'after')
+    if (placement === 'after') {
       document.querySelector(ref_element).after(movie);
-    else // placement === 'before'
+    } else { // placement === 'before'
       document.querySelector(ref_element).before(movie);
+    }
   }
 
   // Event Listeners
@@ -320,13 +321,13 @@
     var submit_showTime, adultTick, childTick, seniorTick, ticketType, ticketSum, ticketMax;
 
     // Variables for Seating page
-    var seat_form, submit_button, seat_hint, checkboxes, adult_tkt, child_tkt, senior_tkt, ticket_num;
+    var seat_form, submit_button, seat_hint, checkboxes, adult_tkt, child_tkt, senior_tkt, ticket_num, show_date_time, show_tickets;
 
     // Variables for Payment page
     var payment_form, submit_payment, pay_name, pay_ccn, pay_expr_mo, pay_expr_yr, pay_cvv, pay_zipcode, pay_email, movie_title, adult_tix, child_tix, senior_tix, subtotal, tax, i;
 
     // Shared Variables
-    var show_movie, edit_time, edit_ticket;
+    var edit_time, edit_ticket;
 
     // Check which page we're on and load that content
     if (document.getElementById('main-select-movie') !== null) {
@@ -697,7 +698,8 @@
           seniorTick.value = localStorage.getItem('tickets_seniorTickets');
         }
 
-        document.querySelector('#movie-date-selected').innerText = localStorage.getItem('time_movieTime') + ", " + localStorage.getItem('time_movieDate');
+        document.querySelector('#movie-date-selected').innerText = 'Time: ' +
+        localStorage.getItem('time_movieTime') + ', ' + localStorage.getItem('time_movieDate');
 
         // Add Back button for editing ticket time
         edit_time = document.createElement('a');
@@ -787,6 +789,20 @@
         });
 
         show_selected_movie('before', '#screen');
+
+        // Show selected movie time
+        show_date_time = document.createElement('p');
+        show_date_time.textContent = 'Time: ' + localStorage.getItem('time_movieTime') + ', ' + localStorage.getItem('time_movieDate');
+        show_date_time.setAttribute('id', 'movie-date-selected');
+
+        document.querySelector('#screen').before(show_date_time);
+
+        // Show selected tickets
+        show_tickets = document.createElement('p');
+        show_tickets.textContent = 'Tickets: ' + calc_tickets(adult_tkt, child_tkt, senior_tkt);
+        show_tickets.setAttribute('id', 'movie-tickets-selected');
+
+        document.querySelector('#screen').before(show_tickets);
 
         // Add Back button for editing tickets
         edit_ticket = document.createElement('a');
