@@ -314,7 +314,7 @@
     var payment_form, submit_payment, pay_name, pay_ccn, pay_expr_mo, pay_expr_yr, pay_cvv, pay_zipcode, pay_email, movie_title, adult_tix, child_tix, senior_tix, subtotal, tax, i;
 
     // Shared Variables
-    var edit_time, edit_ticket;
+    var show_movie, edit_time, edit_ticket;
 
     // Check which page we're on and load that content
     if (document.getElementById('main-select-movie') !== null) {
@@ -649,6 +649,13 @@
         if (localStorage.getItem('movie-title') === null) {
           document.location.assign('../');
         }
+
+        // Show selected movie
+        show_movie = document.createElement('p');
+        show_movie.textContent = 'Movie: ' + localStorage.getItem('movie-title');
+        show_movie.setAttribute('id', 'show-movie');
+
+        document.querySelector("#content-header").after(show_movie);
 
         // Check for the submit button on the time/date page
         if (submit_showTime !== null) {
