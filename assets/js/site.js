@@ -675,6 +675,15 @@
           document.location.assign('../');
         }
 
+        // If navigated back from Seating Page, set values to what was
+        // previously selected
+        if (localStorage.getItem('tickets_childTickets') !== null || localStorage.getItem('tickets_adultTickets') !== null || localStorage.getItem('tickets_seniorTickets') !== null) {
+          adultTick.value = localStorage.getItem('tickets_afultTickets');
+          childTick.value = localStorage.getItem('tickets_childTickets');
+          seniorTick.value = localStorage.getItem('tickets_seniorTickets');
+        }
+
+        // Add Back button for editing ticket time
         edit_time = document.createElement('a');
         edit_time.textContent = 'Edit Time';
         edit_time.setAttribute('id', 'edit-time');
