@@ -317,7 +317,7 @@
     var submit_showTime, adultTick, childTick, seniorTick, ticketType, ticketSum, ticketMax;
 
     // Variables for Seating page
-    var seat_form, submit_button, seat_hint, checkboxes, adult_tkt, child_tkt, senior_tkt, ticket_num, show_date_time, show_tickets;
+    var seat_form, submit_button, seat_hint, checkboxes, adult_tkt, child_tkt, senior_tkt, ticket_num;
 
     // Variables for Payment page
     var payment_form, submit_payment, pay_name, pay_ccn, pay_expr_mo, pay_expr_yr, pay_cvv, pay_zipcode, pay_email, movie_title, adult_tix, child_tix, senior_tix, subtotal, tax, i;
@@ -461,10 +461,26 @@
 
       if (storageAvailable('localStorage')) {
         // Retrieve movie, date, time, and tickets from localStorage
-        movie_title = localStorage.getItem('movie-title');
+        movie_title = localStorage.getItem('movie-title') || '';
         adult_tix = Number(localStorage.getItem('tickets_adultTickets'));
         child_tix = Number(localStorage.getItem('tickets_childTickets'));
         senior_tix = Number(localStorage.getItem('tickets_seniorTickets'));
+
+        // Add Back button for editing tickets
+        edit_ticket = document.createElement('a');
+        edit_ticket.textContent = 'Edit Tickets';
+        edit_ticket.setAttribute('id', 'edit-ticket');
+        edit_ticket.setAttribute('href', '../tickets');
+
+        document.querySelector('#purchase-summary').after(edit_ticket);
+
+        // Add Back button for editing time
+        edit_time = document.createElement('a');
+        edit_time.textContent = 'Edit Time';
+        edit_time.setAttribute('id', 'edit-time');
+        edit_time.setAttribute('href', '../time');
+
+        document.querySelector('#purchase-summary').after(edit_time);
 
         // Update summary with information
         document.querySelector('#summary-movie').innerText += ' '+ movie_title;
@@ -482,6 +498,16 @@
           document.querySelector('#summary-senior').remove();
         } else {
           document.querySelector('#summary-senior').innerText += ' '+senior_tix;
+        }
+        if (child_tix === 0 && adult_tix === 0 && senior_tix === 0) {
+          edit_ticket.remove();
+        }
+        if (localStorage.getItem('time_movieTime') === null || localStorage.getItem('time_movieDate') === null) {
+          document.querySelector('#summary-time').remove();
+          edit_time.remove();
+        }
+        else {
+          document.querySelector('#summary-time').innerText += ' ' + localStorage.getItem('time_movieTime') + ', ' + localStorage.getItem('time_movieDate');
         }
 
         // Calculate subtotal, tax, and grand total
