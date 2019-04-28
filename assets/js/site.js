@@ -299,6 +299,18 @@
     }
   }
 
+  // Show selected movie
+  function show_selected_movie(placement, ref_element) {
+    var movie = document.createElement('p');
+    movie.textContent = 'Movie: ' + localStorage.getItem('movie-title');
+    movie.setAttribute('id', 'movie');
+
+    if (placement === 'after')
+      document.querySelector(ref_element).after(movie);
+    else // placement === 'before'
+      document.querySelector(ref_element).before(movie);
+  }
+
   // Event Listeners
   document.addEventListener('DOMContentLoaded', function() {
     // Variables for Movie Select / Home page
@@ -650,12 +662,7 @@
           document.location.assign('../');
         }
 
-        // Show selected movie
-        show_movie = document.createElement('p');
-        show_movie.textContent = 'Movie: ' + localStorage.getItem('movie-title');
-        show_movie.setAttribute('id', 'show-movie');
-
-        document.querySelector("#content-header").after(show_movie);
+        show_selected_movie('after', '#content-header');
 
         // Check for the submit button on the time/date page
         if (submit_showTime !== null) {
@@ -685,7 +692,7 @@
         // If navigated back from Seating Page, set values to what was
         // previously selected
         if (localStorage.getItem('tickets_childTickets') !== null || localStorage.getItem('tickets_adultTickets') !== null || localStorage.getItem('tickets_seniorTickets') !== null) {
-          adultTick.value = localStorage.getItem('tickets_afultTickets');
+          adultTick.value = localStorage.getItem('tickets_adultTickets');
           childTick.value = localStorage.getItem('tickets_childTickets');
           seniorTick.value = localStorage.getItem('tickets_seniorTickets');
         }
@@ -697,6 +704,8 @@
         edit_time.setAttribute('href', '../time');
 
         document.querySelector("#content-header").after(edit_time);
+
+        show_selected_movie('after', '#content-header');
 
         // Check for the submit button/input on the ticket page
         if (ticketType !== null) {
@@ -774,6 +783,8 @@
         seat_form.addEventListener('input', function(){
           storePrefixedInputStorageItem(seat_form.name, event.target);
         });
+
+        show_selected_movie('before', '#screen');
 
         // Add Back button for editing tickets
         edit_ticket = document.createElement('a');
