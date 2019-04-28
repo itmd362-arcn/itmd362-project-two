@@ -758,6 +758,14 @@
         seat_form.addEventListener('input', function(){
           storePrefixedInputStorageItem(seat_form.name, event.target);
         });
+        
+        // Add Back button for editting ticket time
+        edit_time = document.createElement('a');
+        edit_time.textContent = 'Edit Time';
+        edit_time.setAttribute('id', 'edit-time');
+        edit_time.setAttribute('href', '../time');
+
+        document.querySelector("#screen").before(edit_time);
       }
 
       // Listen for the form's submit event, intercept it and
