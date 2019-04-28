@@ -697,13 +697,15 @@
           seniorTick.value = localStorage.getItem('tickets_seniorTickets');
         }
 
+        document.querySelector('#movie-date-selected').innerText = localStorage.getItem('time_movieTime') + ", " + localStorage.getItem('time_movieDate');
+
         // Add Back button for editing ticket time
         edit_time = document.createElement('a');
         edit_time.textContent = 'Edit Time';
         edit_time.setAttribute('id', 'edit-time');
         edit_time.setAttribute('href', '../time');
 
-        document.querySelector("#content-header").after(edit_time);
+        document.querySelector("#movie-date-selected").after(edit_time);
 
         show_selected_movie('after', '#content-header');
 
